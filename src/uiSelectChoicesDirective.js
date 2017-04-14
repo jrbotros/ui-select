@@ -1,19 +1,22 @@
-uis.directive('uiSelectChoices',
-  ['uiSelectConfig', 'uisRepeatParser', 'uiSelectMinErr', '$compile', '$window',
-  function(uiSelectConfig, RepeatParser, uiSelectMinErr, $compile, $window) {
+import {
+  getTemplate,
+} from 'helpers'
+
+export default function uiSelectChoices(uiSelectConfig, RepeatParser, uiSelectMinErr, $compile, $window) {
+  'ngInject';
 
   return {
     restrict: 'EA',
     require: '^uiSelect',
     replace: true,
     transclude: true,
-    templateUrl: function(tElement) {
+    template: function(tElement) {
       // Needed so the uiSelect can detect the transcluded content
       tElement.addClass('ui-select-choices');
 
       // Gets theme attribute from parent (ui-select)
       var theme = tElement.parent().attr('theme') || uiSelectConfig.theme;
-      return theme + '/choices.tpl.html';
+      return getTemplate(theme, 'choices');
     },
 
     compile: function(tElement, tAttrs) {
@@ -87,4 +90,4 @@ uis.directive('uiSelectChoices',
       };
     }
   };
-}]);
+}

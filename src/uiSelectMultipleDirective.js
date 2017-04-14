@@ -1,4 +1,12 @@
-uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelectMinErr, $timeout) {
+import angular from 'angular';
+
+import {
+  isNil,
+  KEY
+} from 'helpers'
+
+export default function uiSelectMultiple(uiSelectMinErr, $timeout) {
+  'ngInject';
   return {
     restrict: 'EA',
     require: ['^uiSelect', '^ngModel'],
@@ -457,4 +465,4 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
 
     }
   };
-}]);
+}

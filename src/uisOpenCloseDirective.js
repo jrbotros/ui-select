@@ -1,4 +1,5 @@
-uis.directive('uisOpenClose', ['$parse', '$timeout', function ($parse, $timeout) {
+export default function uisOpenClose($parse, $timeout) {
+  'ngInject';
   return {
     restrict: 'A',
     require: 'uiSelect',
@@ -16,4 +17,4 @@ uis.directive('uisOpenClose', ['$parse', '$timeout', function ($parse, $timeout)
       });
     }
   };
-}]);
+}

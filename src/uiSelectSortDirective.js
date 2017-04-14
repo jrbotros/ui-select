@@ -1,5 +1,8 @@
+import angular from 'angular';
+
 // Make multiple matches sortable
-uis.directive('uiSelectSort', ['$timeout', 'uiSelectConfig', 'uiSelectMinErr', function($timeout, uiSelectConfig, uiSelectMinErr) {
+export default function uiSelectSort($timeout, uiSelectConfig, uiSelectMinErr) {
+  'ngInject';
   return {
     require: ['^^uiSelect', '^ngModel'],
     link: function(scope, element, attrs, ctrls) {
@@ -145,4 +148,4 @@ uis.directive('uiSelectSort', ['$timeout', 'uiSelectConfig', 'uiSelectMinErr', f
       });
     }
   };
-}]);
+}

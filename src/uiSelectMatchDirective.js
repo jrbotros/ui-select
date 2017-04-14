@@ -1,10 +1,17 @@
-uis.directive('uiSelectMatch', ['uiSelectConfig', function(uiSelectConfig) {
+import angular from 'angular';
+
+import {
+  getTemplate,
+} from 'helpers';
+
+export default function uiSelectMatch(uiSelectConfig) {
+  'ngInject';
   return {
     restrict: 'EA',
     require: '^uiSelect',
     replace: true,
     transclude: true,
-    templateUrl: function(tElement) {
+    template: function(tElement) {
       // Needed so the uiSelect can detect the transcluded content
       tElement.addClass('ui-select-match');
 
@@ -13,7 +20,9 @@ uis.directive('uiSelectMatch', ['uiSelectConfig', function(uiSelectConfig) {
       var theme = getAttribute(parent, 'theme') || uiSelectConfig.theme;
       var multi = angular.isDefined(getAttribute(parent, 'multiple'));
 
-      return theme + (multi ? '/match-multiple.tpl.html' : '/match.tpl.html');      
+      return getTemplate(
+        theme,
+        multi ? 'match-multiple' : 'match');
     },
     link: function(scope, element, attrs, $select) {
       $select.lockChoiceExpression = attrs.uiLockChoice;
@@ -45,4 +54,4 @@ uis.directive('uiSelectMatch', ['uiSelectConfig', function(uiSelectConfig) {
     if (elem[0].hasAttribute('x-' + attribute))
       return elem.attr('x-' + attribute);
   }
-}]);
+}

@@ -1,4 +1,12 @@
-uis.directive('uiSelectSingle', ['$timeout','$compile', function($timeout, $compile) {
+import angular from 'angular';
+
+import {
+  isNil,
+  KEY
+} from 'helpers'
+
+export default function uiSelectSingle($timeout, $compile) {
+  'ngInject';
   return {
     restrict: 'EA',
     require: ['^uiSelect', '^ngModel'],
@@ -140,4 +148,4 @@ uis.directive('uiSelectSingle', ['$timeout','$compile', function($timeout, $comp
 
     }
   };
-}]);
+}
