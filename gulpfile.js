@@ -19,82 +19,20 @@ var config = {
       ' */\n\n\n'
 };
 
-gulp.task('default', ['build','test']);
-gulp.task('build', ['scripts', 'styles']);
-gulp.task('test', ['build', 'karma']);
+gulp.task('default', ['test']);
+gulp.task('test', ['karma']);
 
-gulp.task('watch', ['build','karma-watch'], function() {
-  gulp.watch(['src/**/*.{js,html}'], ['build']);
-});
+gulp.task('watch', ['karma-watch']);
 
 gulp.task('clean', function(cb) {
   del(['dist', 'temp'], cb);
 });
 
-gulp.task('scripts', ['clean'], function() {
-
-  var buildTemplates = function () {
-    return gulp.src('src/**/*.html')
-      .pipe($.minifyHtml({
-             empty: true,
-             spare: true,
-             quotes: true
-            }))
-      .pipe($.angularTemplatecache({module: 'ui.select'}));
-  };
-
-  var buildLib = function(){
-    return gulp.src(['src/common.js','src/*.js'])
-      .pipe($.plumber({
-        errorHandler: handleError
-      }))
-      .pipe($.concat('select_without_templates.js'))
-      .pipe($.header('(function () { \n"use strict";\n'))
-      .pipe($.footer('\n}());'))
-      .pipe(gulp.dest('temp'))
-      .pipe($.jshint())
-      .pipe($.jshint.reporter('jshint-stylish'))
-      .pipe($.jshint.reporter('fail'));
-  };
-
-  return streamqueue({objectMode: true }, buildLib(), buildTemplates())
-    .pipe($.plumber({
-      errorHandler: handleError
-    }))
-    .pipe($.concat('select.js'))
-    .pipe($.header(config.banner, {
-      timestamp: (new Date()).toISOString(), pkg: config.pkg
-    }))
-    .pipe(gulp.dest('dist'))
-    .pipe($.sourcemaps.init())
-    .pipe($.uglify({preserveComments: 'some'}))
-    .pipe($.concat('select.min.js'))
-    .pipe($.sourcemaps.write('./'))
-    .pipe(gulp.dest('dist'));
-
-});
-
-gulp.task('styles', ['clean'], function() {
-
-  return gulp.src(['src/common.css'], {base: 'src'})
-    .pipe($.sourcemaps.init())
-    .pipe($.header(config.banner, {
-      timestamp: (new Date()).toISOString(), pkg: config.pkg
-    }))
-    .pipe($.concat('select.css'))
-    .pipe(gulp.dest('dist'))
-    .pipe($.minifyCss())
-    .pipe($.concat('select.min.css'))
-    .pipe($.sourcemaps.write('../dist', {debug: true}))
-    .pipe(gulp.dest('dist'));
-
-});
-
-gulp.task('karma', ['build'], function() {
+gulp.task('karma', function() {
   karma.start({configFile : __dirname +'/karma.conf.js', singleRun: true});
 });
 
-gulp.task('karma-watch', ['build'], function() {
+gulp.task('karma-watch', function() {
   karma.start({configFile :  __dirname +'/karma.conf.js', singleRun: false});
 });
 

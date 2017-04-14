@@ -9,15 +9,27 @@ module.exports = function(config) {
 
     // List of files / patterns to load in the browser
     files: [
-      'node_modules/jquery/dist/jquery.js',
-      'node_modules/angular/angular.js',
-      'node_modules/angular-sanitize/angular-sanitize.js',
-      'node_modules/angular-mocks/angular-mocks.js',
-
-      'dist/select.js',
+      // 'node_modules/jquery/dist/jquery.js',
+      // 'node_modules/angular/angular.js',
+      //
+      'src/common.js',
       'test/helpers.js',
-      'test/**/*.spec.js'
+      'test/**/*.spec.js',
     ],
+
+    preprocessors: {
+      'src/common.js': ['webpack', 'sourcemap'],
+      'test/**/*.spec.js': ['webpack', 'sourcemap'],
+    },
+
+    webpack: require('./webpack.config.js'),
+
+    webpackMiddleware: {
+      noInfo: true,
+      stats: {
+        chunks: false,
+      },
+    },
 
     // List of files to exclude
     exclude: ['./index.js'],

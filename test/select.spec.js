@@ -1,4 +1,6 @@
-'use strict';
+import angular from 'angular';
+import 'angular-sanitize';
+import 'angular-mocks';
 
 describe('ui-select tests', function () {
   var scope, $rootScope, $compile, $timeout, $injector, $q, uisRepeatParser;
@@ -70,10 +72,10 @@ describe('ui-select tests', function () {
     }
   });
 
-  beforeEach(module('ngSanitize', 'ui.select', 'wrapperDirective', 'testValidator'));
+  beforeEach(angular.mock.module('ngSanitize', 'ui.select', 'wrapperDirective', 'testValidator'));
 
   beforeEach(function () {
-    module(function ($provide) {
+    angular.mock.module(function ($provide) {
       $provide.factory('uisOffset', function () {
         return function (el) {
           return {top: 100, left: 200, width: 300, height: 400};
@@ -228,7 +230,7 @@ describe('ui-select tests', function () {
   }
 
   function getMatchLabel(el) {
-    return $(el).find('.ui-select-match > span:first > span[ng-transclude]:not(.ng-hide)').text();
+    return angular.element(el).find('.ui-select-match > span:first > span[ng-transclude]:not(.ng-hide)').text();
   }
 
   function clickItem(el, text) {
@@ -237,12 +239,12 @@ describe('ui-select tests', function () {
       openDropdown(el);
     }
 
-    $(el).find('.ui-select-choices-row div:contains("' + text + '")').click();
+    angular.element(el).find('.ui-select-choices-row div:contains("' + text + '")').click();
     scope.$digest();
   }
 
   function clickMatch(el) {
-    $(el).find('.ui-select-match > span:first').click();
+    angular.element(el).find('.ui-select-match > span:first').click();
     scope.$digest();
   }
 
@@ -457,20 +459,20 @@ describe('ui-select tests', function () {
   it('should compile child directives', function () {
     var el = createUiSelect();
 
-    var searchEl = $(el).find('.ui-select-search');
+    var searchEl = angular.element(el).find('.ui-select-search');
     expect(searchEl.length).toEqual(1);
 
-    var matchEl = $(el).find('.ui-select-match');
+    var matchEl = angular.element(el).find('.ui-select-match');
     expect(matchEl.length).toEqual(1);
 
-    var choicesContentEl = $(el).find('.ui-select-choices-content');
+    var choicesContentEl = angular.element(el).find('.ui-select-choices-content');
     expect(choicesContentEl.length).toEqual(1);
 
-    var choicesContainerEl = $(el).find('.ui-select-choices');
+    var choicesContainerEl = angular.element(el).find('.ui-select-choices');
     expect(choicesContainerEl.length).toEqual(1);
 
     openDropdown(el);
-    var choicesEls = $(el).find('.ui-select-choices-row');
+    var choicesEls = angular.element(el).find('.ui-select-choices-row');
     expect(choicesEls.length).toEqual(8);
   });
 
@@ -487,7 +489,7 @@ describe('ui-select tests', function () {
       ngClass: "{class: expression}"
     });
 
-    expect($(el).attr('ng-class')).toEqual("{class: expression, open: $select.open}");
+    expect(angular.element(el).attr('ng-class')).toEqual("{class: expression, open: $select.open}");
   });
 
   it('should correctly render initial state with track by feature', function () {
@@ -524,7 +526,7 @@ describe('ui-select tests', function () {
     openDropdown(el);
 
     var generatedId = el.scope().$select.generatedId;
-    expect($(el).find('[id="ui-select-choices-row-' + generatedId + '-0"]').length).toEqual(1);
+    expect(angular.element(el).find('[id="ui-select-choices-row-' + generatedId + '-0"]').length).toEqual(1);
   });
 
   it('should utilize wrapper directive ng-model', function () {
@@ -536,7 +538,7 @@ describe('ui-select tests', function () {
       age: 30
     };
     scope.$digest();
-    expect($(el).find('.ui-select-container > .ui-select-match > span:first > span[ng-transclude]:not(.ng-hide)')
+    expect(angular.element(el).find('.ui-select-container > .ui-select-match > span:first > span[ng-transclude]:not(.ng-hide)')
       .text()).toEqual('Samantha');
   });
 
@@ -668,23 +670,23 @@ describe('ui-select tests', function () {
   it('should pass tabindex to focusser', function () {
     var el = createUiSelect({tabindex: 5});
 
-    expect($(el).find('.ui-select-focusser').attr('tabindex')).toEqual('5');
-    expect($(el).attr('tabindex')).toEqual(undefined);
+    expect(angular.element(el).find('.ui-select-focusser').attr('tabindex')).toEqual('5');
+    expect(angular.element(el).attr('tabindex')).toEqual(undefined);
   });
 
   it('should pass tabindex to focusser when tabindex is an expression', function () {
     scope.tabValue = 22;
     var el = createUiSelect({tabindex: '{{tabValue + 10}}'});
 
-    expect($(el).find('.ui-select-focusser').attr('tabindex')).toEqual('32');
-    expect($(el).attr('tabindex')).toEqual(undefined);
+    expect(angular.element(el).find('.ui-select-focusser').attr('tabindex')).toEqual('32');
+    expect(angular.element(el).attr('tabindex')).toEqual(undefined);
   });
 
   it('should not give focusser a tabindex when ui-select does not have one', function () {
     var el = createUiSelect();
 
-    expect($(el).find('.ui-select-focusser').attr('tabindex')).toEqual(undefined);
-    expect($(el).attr('tabindex')).toEqual(undefined);
+    expect(angular.element(el).find('.ui-select-focusser').attr('tabindex')).toEqual(undefined);
+    expect(angular.element(el).attr('tabindex')).toEqual(undefined);
   });
 
   it('should be disabled if the attribute says so', function () {
@@ -713,19 +715,19 @@ describe('ui-select tests', function () {
     clickMatch(el);
 
     showChoicesForSearch(el, 'idontexist');
-    $(el).scope().$select.activeIndex = 0;
-    $(el).scope().$select.select('idontexist');
+    angular.element(el).scope().$select.activeIndex = 0;
+    angular.element(el).scope().$select.select('idontexist');
 
-    expect($(el).scope().$select.selected).not.toBeDefined();
+    expect(angular.element(el).scope().$select.selected).not.toBeDefined();
   });
 
   it('should allow tagging if the attribute says so', function () {
     var el = createUiSelect({tagging: true});
     clickMatch(el);
 
-    $(el).scope().$select.select("I don't exist");
+    angular.element(el).scope().$select.select("I don't exist");
 
-    expect($(el).scope().$select.selected).toEqual("I don't exist");
+    expect(angular.element(el).scope().$select.selected).toEqual("I don't exist");
   });
 
   it('should format new items using the tagging function when the attribute is a function', function () {
@@ -741,11 +743,11 @@ describe('ui-select tests', function () {
     var el = createUiSelect({tagging: 'taggingFunc'});
     clickMatch(el);
 
-    $(el).scope().$select.search = 'idontexist';
-    $(el).scope().$select.activeIndex = 0;
-    $(el).scope().$select.select('idontexist');
+    angular.element(el).scope().$select.search = 'idontexist';
+    angular.element(el).scope().$select.activeIndex = 0;
+    angular.element(el).scope().$select.select('idontexist');
 
-    expect($(el).scope().$select.selected).toEqual({
+    expect(angular.element(el).scope().$select.selected).toEqual({
       name: 'idontexist',
       email: 'idontexist@email.com',
       group: 'Foo',
@@ -844,13 +846,13 @@ describe('ui-select tests', function () {
     scope.$digest();
 
     openDropdown(el);
-    var choicesEls = $(el).find('.ui-select-choices-row');
+    var choicesEls = angular.element(el).find('.ui-select-choices-row');
     expect(choicesEls.length).toEqual(10);
 
     scope.peopleObj['11'] = {name: 'Camila', email: 'camila@email.com', age: 1, country: 'Ecuador'};
     scope.$digest();
 
-    choicesEls = $(el).find('.ui-select-choices-row');
+    choicesEls = angular.element(el).find('.ui-select-choices-row');
     expect(choicesEls.length).toEqual(11);
 
   });
@@ -1505,7 +1507,7 @@ describe('ui-select tests', function () {
 
     triggerKeydown(searchInput, Key.Enter);
 
-    expect($(el).scope().$select.selected).toEqual('idontexist');
+    expect(angular.element(el).scope().$select.selected).toEqual('idontexist');
   });
 
   it('should allow creating tag on ENTER in multiple select mode with tagging enabled, no labels', function () {
@@ -1530,7 +1532,7 @@ describe('ui-select tests', function () {
 
     triggerKeydown(searchInput, Key.Enter);
 
-    expect($(el).scope().$select.selected).toEqual(['idontexist']);
+    expect(angular.element(el).scope().$select.selected).toEqual(['idontexist']);
   });
 
   it('should allow selecting an item (click) in single select mode with tagging enabled', function () {
@@ -1575,7 +1577,7 @@ describe('ui-select tests', function () {
 
     openDropdown(el);
 
-    var choicesEls = $(el).find('.ui-select-choices-row');
+    var choicesEls = angular.element(el).find('.ui-select-choices-row');
     expect(choicesEls.length).toEqual(6);
 
     ['Adam', 'Amalie', 'Estefanía', 'Wladimir', 'Nicole', 'Natasha'].forEach(function (name, index) {
@@ -1600,7 +1602,7 @@ describe('ui-select tests', function () {
     expect(getMatchLabel(el)).toEqual("Samantha");
     openDropdown(el);
 
-    var choicesEls = $(el).find('.ui-select-choices-row');
+    var choicesEls = angular.element(el).find('.ui-select-choices-row');
     expect(choicesEls.length).toEqual(8);
 
     ['Adam', 'Amalie', 'Estefanía', 'Adrian', 'Wladimir', 'Samantha', 'Nicole', 'Natasha'].forEach(function (name, index) {
@@ -1626,7 +1628,7 @@ describe('ui-select tests', function () {
 
     openDropdown(el);
 
-    var choicesEls = $(el).find('.ui-select-choices-row');
+    var choicesEls = angular.element(el).find('.ui-select-choices-row');
     expect(choicesEls.length).toEqual(8);
     [false, false, false, true /* Adrian */, false, true /* Samantha */, false, false].forEach(function (bool, index) {
       expect($(choicesEls[index]).hasClass('disabled')).toEqual(bool);
@@ -1671,7 +1673,7 @@ describe('ui-select tests', function () {
     );
 
     openDropdown(el);
-    expect($(el).find('.only-once').length).toEqual(1);
+    expect(angular.element(el).find('.only-once').length).toEqual(1);
 
 
   });
@@ -1840,7 +1842,7 @@ describe('ui-select tests', function () {
     //model value defined because it's valid, view value defined as expected
     var validTag = scope.taggingFunc("iamvalid");
     expect(scope.selection.selected).toEqual(validTag);
-    expect($(el).scope().$select.selected).toEqual(validTag);
+    expect(angular.element(el).scope().$select.selected).toEqual(validTag);
 
     clickMatch(el);
     setSearchText(el, 'notvalid');
@@ -1848,12 +1850,12 @@ describe('ui-select tests', function () {
 
     //model value undefined because it's invalid, view value STILL defined as expected
     expect(scope.selection.selected).toEqual(undefined);
-    expect($(el).scope().$select.selected).toEqual(scope.taggingFunc("notvalid"));
+    expect(angular.element(el).scope().$select.selected).toEqual(scope.taggingFunc("notvalid"));
   });
 
   it('should add an id to the search input field', function () {
     var el = createUiSelect({inputId: 'inid'});
-    var searchEl = $(el).find('input.ui-select-search');
+    var searchEl = angular.element(el).find('input.ui-select-search');
     expect(searchEl.length).toEqual(1);
     expect(searchEl[0].id).toEqual('inid');
   });
@@ -1878,12 +1880,12 @@ describe('ui-select tests', function () {
 
       it('should show search input when true', function () {
         setupSelectComponent(true, 'selectize');
-        expect($(el).find('.ui-select-search')).not.toHaveClass('ui-select-search-hidden');
+        expect(angular.element(el).find('.ui-select-search')).not.toHaveClass('ui-select-search-hidden');
       });
 
       it('should hide search input when false', function () {
         setupSelectComponent(false, 'selectize');
-        expect($(el).find('.ui-select-search')).toHaveClass('ui-select-search-hidden');
+        expect(angular.element(el).find('.ui-select-search')).toHaveClass('ui-select-search-hidden');
       });
 
     });
@@ -1892,12 +1894,12 @@ describe('ui-select tests', function () {
 
       it('should show search input when true', function () {
         setupSelectComponent('true', 'select2');
-        expect($(el).find('.search-container')).not.toHaveClass('ui-select-search-hidden');
+        expect(angular.element(el).find('.search-container')).not.toHaveClass('ui-select-search-hidden');
       });
 
       it('should hide search input when false', function () {
         setupSelectComponent('false', 'select2');
-        expect($(el).find('.search-container')).toHaveClass('ui-select-search-hidden');
+        expect(angular.element(el).find('.search-container')).toHaveClass('ui-select-search-hidden');
       });
 
     });
@@ -1907,13 +1909,13 @@ describe('ui-select tests', function () {
       it('should show search input when true', function () {
         setupSelectComponent('true', 'bootstrap');
         clickMatch(el);
-        expect($(el).find('.ui-select-search')).not.toHaveClass('ui-select-search-hidden');
+        expect(angular.element(el).find('.ui-select-search')).not.toHaveClass('ui-select-search-hidden');
       });
 
       it('should hide search input when false', function () {
         setupSelectComponent('false', 'bootstrap');
         clickMatch(el);
-        expect($(el).find('.ui-select-search')).toHaveClass('ui-select-search-hidden');
+        expect(angular.element(el).find('.ui-select-search')).toHaveClass('ui-select-search-hidden');
       });
 
     });
@@ -2071,7 +2073,7 @@ describe('ui-select tests', function () {
       var searchInput = el.find('.ui-select-search');
 
       expect(searchInput.attr('tabindex')).toEqual('5');
-      expect($(el).attr('tabindex')).toEqual(undefined);
+      expect(angular.element(el).attr('tabindex')).toEqual(undefined);
     });
 
     it('should pass tabindex to searchInput when tabindex is an expression', function () {
@@ -2080,7 +2082,7 @@ describe('ui-select tests', function () {
       var searchInput = el.find('.ui-select-search');
 
       expect(searchInput.attr('tabindex')).toEqual('32');
-      expect($(el).attr('tabindex')).toEqual(undefined);
+      expect(angular.element(el).attr('tabindex')).toEqual(undefined);
     });
 
     it('should not give searchInput a tabindex when ui-select does not have one', function () {
@@ -2088,7 +2090,7 @@ describe('ui-select tests', function () {
       var searchInput = el.find('.ui-select-search');
 
       expect(searchInput.attr('tabindex')).toEqual(undefined);
-      expect($(el).attr('tabindex')).toEqual(undefined);
+      expect(angular.element(el).attr('tabindex')).toEqual(undefined);
     });
 
     it('should update size of search input after removing an item', function () {
@@ -2639,7 +2641,7 @@ describe('ui-select tests', function () {
       //model value defined because it's valid, view value defined as expected
       var validTag = scope.taggingFunc("iamvalid");
       expect(scope.selection.selectedMultiple).toEqual([jasmine.objectContaining(validTag)]);
-      expect($(el).scope().$select.selected).toEqual([jasmine.objectContaining(validTag)]);
+      expect(angular.element(el).scope().$select.selected).toEqual([jasmine.objectContaining(validTag)]);
 
       clickMatch(el);
       setSearchText(el, 'notvalid');
@@ -2648,7 +2650,7 @@ describe('ui-select tests', function () {
       //model value undefined because it's invalid, view value STILL defined as expected
       var invalidTag = scope.taggingFunc("notvalid");
       expect(scope.selection.selected).toEqual(undefined);
-      expect($(el).scope().$select.selected)
+      expect(angular.element(el).scope().$select.selected)
         .toEqual([jasmine.objectContaining(validTag), jasmine.objectContaining(invalidTag)]);
     });
 
@@ -2796,7 +2798,7 @@ describe('ui-select tests', function () {
         '
       );
 
-      expect($(el).scope().$select.selected).toEqual([]);
+      expect(angular.element(el).scope().$select.selected).toEqual([]);
     });
 
     it('should have tolerance for null values', function () {
@@ -2814,7 +2816,7 @@ describe('ui-select tests', function () {
         '
       );
 
-      expect($(el).scope().$select.selected).toEqual([]);
+      expect(angular.element(el).scope().$select.selected).toEqual([]);
     });
 
     it('should allow paste tag from clipboard', function () {
@@ -2831,8 +2833,8 @@ describe('ui-select tests', function () {
       clickMatch(el);
       triggerPaste(el.find('input'), 'tag1');
 
-      expect($(el).scope().$select.selected.length).toBe(1);
-      expect($(el).scope().$select.selected[0].name).toBe('tag1');
+      expect(angular.element(el).scope().$select.selected.length).toBe(1);
+      expect(angular.element(el).scope().$select.selected[0].name).toBe('tag1');
     });
 
     it('should allow paste tag from clipboard for generic ClipboardEvent', function () {
@@ -2849,8 +2851,8 @@ describe('ui-select tests', function () {
       clickMatch(el);
       triggerPaste(el.find('input'), 'tag1', true);
 
-      expect($(el).scope().$select.selected.length).toBe(1);
-      expect($(el).scope().$select.selected[0].name).toBe('tag1');
+      expect(angular.element(el).scope().$select.selected.length).toBe(1);
+      expect(angular.element(el).scope().$select.selected[0].name).toBe('tag1');
     });
 
     it('should allow paste multiple tags', function () {
@@ -2867,7 +2869,7 @@ describe('ui-select tests', function () {
       clickMatch(el);
       triggerPaste(el.find('input'), ',tag1,tag2,tag3,,tag5,');
 
-      expect($(el).scope().$select.selected.length).toBe(5);
+      expect(angular.element(el).scope().$select.selected.length).toBe(5);
     });
 
     it('should allow paste multiple tags with generic ClipboardEvent', function () {
@@ -2884,7 +2886,7 @@ describe('ui-select tests', function () {
       clickMatch(el);
       triggerPaste(el.find('input'), ',tag1,tag2,tag3,,tag5,', true);
 
-      expect($(el).scope().$select.selected.length).toBe(5);
+      expect(angular.element(el).scope().$select.selected.length).toBe(5);
     });
 
     it('should split pastes on ENTER (and with undefined tagging function)', function () {
@@ -2892,7 +2894,7 @@ describe('ui-select tests', function () {
       clickMatch(el);
       triggerPaste(el.find('input'), "tag1\ntag2\ntag3");
 
-      expect($(el).scope().$select.selected.length).toBe(3);
+      expect(angular.element(el).scope().$select.selected.length).toBe(3);
     });
 
     it('should split pastes on TAB', function () {
@@ -2900,7 +2902,7 @@ describe('ui-select tests', function () {
       clickMatch(el);
       triggerPaste(el.find('input'), "tag1\ttag2\ttag3");
 
-      expect($(el).scope().$select.selected.length).toBe(3);
+      expect(angular.element(el).scope().$select.selected.length).toBe(3);
     });
 
     it('should split pastes on tagging token that is not the first token', function () {
@@ -2908,7 +2910,7 @@ describe('ui-select tests', function () {
       clickMatch(el);
       triggerPaste(el.find('input'), "tag1\ntag2\ntag3\ntag4");
 
-      expect($(el).scope().$select.selected).toEqual(['tag1', 'tag2', 'tag3', 'tag4']);
+      expect(angular.element(el).scope().$select.selected).toEqual(['tag1', 'tag2', 'tag3', 'tag4']);
     });
 
     it('should split pastes only on first tagging token found in paste string', function () {
@@ -2916,7 +2918,7 @@ describe('ui-select tests', function () {
       clickMatch(el);
       triggerPaste(el.find('input'), "tag1\ntag2\ntag3\ttag4");
 
-      expect($(el).scope().$select.selected).toEqual(['tag1', 'tag2', 'tag3\ttag4']);
+      expect(angular.element(el).scope().$select.selected).toEqual(['tag1', 'tag2', 'tag3\ttag4']);
     });
 
     it('should allow paste with tagging-tokens and tagging-label=="false"', function () {
@@ -2924,12 +2926,12 @@ describe('ui-select tests', function () {
       clickMatch(el);
       triggerPaste(el.find('input'), 'tag1');
 
-      expect($(el).scope().$select.selected).toEqual(['tag1']);
+      expect(angular.element(el).scope().$select.selected).toEqual(['tag1']);
     });
 
     it('should add an id to the search input field', function () {
       var el = createUiSelectMultiple({inputId: 'inid'});
-      var searchEl = $(el).find('input.ui-select-search');
+      var searchEl = angular.element(el).find('input.ui-select-search');
       expect(searchEl.length).toEqual(1);
       expect(searchEl[0].id).toEqual('inid');
     });
@@ -3070,23 +3072,23 @@ describe('ui-select tests', function () {
     describe('Reset the search value', function () {
       it('should clear the search input when resetSearchInput is true', function () {
         var el = createUiSelectMultiple();
-        $(el).scope().$select.search = 'idontexist';
-        $(el).scope().$select.select('idontexist');
-        expect($(el).scope().$select.search).toEqual('');
+        angular.element(el).scope().$select.search = 'idontexist';
+        angular.element(el).scope().$select.select('idontexist');
+        expect(angular.element(el).scope().$select.search).toEqual('');
       });
 
       it('should not clear the search input when resetSearchInput is false', function () {
         var el = createUiSelectMultiple({resetSearchInput: false});
-        $(el).scope().$select.search = 'idontexist';
-        $(el).scope().$select.select('idontexist');
-        expect($(el).scope().$select.search).toEqual('idontexist');
+        angular.element(el).scope().$select.search = 'idontexist';
+        angular.element(el).scope().$select.select('idontexist');
+        expect(angular.element(el).scope().$select.search).toEqual('idontexist');
       });
 
       it('should clear the search input when resetSearchInput is default set', function () {
         var el = createUiSelectMultiple();
-        $(el).scope().$select.search = 'idontexist';
-        $(el).scope().$select.select('idontexist');
-        expect($(el).scope().$select.search).toEqual('');
+        angular.element(el).scope().$select.search = 'idontexist';
+        angular.element(el).scope().$select.select('idontexist');
+        expect(angular.element(el).scope().$select.search).toEqual('');
       });
     });
   });
@@ -3509,22 +3511,22 @@ describe('ui-select tests', function () {
       describe(theme + ' theme', function () {
         it('should show the header', function () {
           setupSelectComponent(theme);
-          expect($(el).find('.ui-select-header').text().trim()).toBe(scope.selection.selected.name);
+          expect(angular.element(el).find('.ui-select-header').text().trim()).toBe(scope.selection.selected.name);
         });
 
         it('should show the header in multiple option', function () {
           setupSelectComponent(theme, true);
-          expect($(el).find('.ui-select-header').text().trim()).toBe(scope.selection.selected[0].name);
+          expect(angular.element(el).find('.ui-select-header').text().trim()).toBe(scope.selection.selected[0].name);
         });
 
         it('should show the footer', function () {
           setupSelectComponent(theme);
-          expect($(el).find('.ui-select-footer').text().trim()).toBe(scope.selection.selected.name);
+          expect(angular.element(el).find('.ui-select-footer').text().trim()).toBe(scope.selection.selected.name);
         });
 
         it('should show the footer in multiple option', function () {
           setupSelectComponent(theme, true);
-          expect($(el).find('.ui-select-footer').text().trim()).toBe(scope.selection.selected[0].name);
+          expect(angular.element(el).find('.ui-select-footer').text().trim()).toBe(scope.selection.selected[0].name);
         });
       });
     });

@@ -1,11 +1,9 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.19.6 - 2017-04-12T06:30:23.759Z
+ * Version: 0.19.7 - 2017-04-14T03:23:48.011Z
  * License: MIT
  */
-
-
 /* Style when highlighting a search. */
 .ui-select-highlight {
   font-weight: bold;
@@ -413,3 +411,5 @@ body > .ui-select-bootstrap.open {
 .ui-select-refreshing.ng-animate {
   -webkit-animation: none 0s;
 }
+
+/*# sourceMappingURL=select.css.map*/

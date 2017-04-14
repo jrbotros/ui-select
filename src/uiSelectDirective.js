@@ -1,12 +1,19 @@
-uis.directive('uiSelect',
-  ['$document', 'uiSelectConfig', 'uiSelectMinErr', 'uisOffset', '$compile', '$parse', '$timeout',
-  function($document, uiSelectConfig, uiSelectMinErr, uisOffset, $compile, $parse, $timeout) {
+import angular from 'angular';
+
+import {
+  getTemplate,
+} from 'helpers'
+
+export default function uiSelect($document, uiSelectConfig, uiSelectMinErr, uisOffset, $compile, $parse, $timeout) {
+  'ngInject';
 
   return {
     restrict: 'EA',
-    templateUrl: function(tElement, tAttrs) {
+    template: function(tElement, tAttrs) {
       var theme = tAttrs.theme || uiSelectConfig.theme;
-      return theme + (angular.isDefined(tAttrs.multiple) ? '/select-multiple.tpl.html' : '/select.tpl.html');
+      return getTemplate(
+        theme,
+        angular.isDefined(tAttrs.multiple) ? 'select-multiple' : 'select');
     },
     replace: true,
     transclude: true,
@@ -221,7 +228,6 @@ uis.directive('uiSelect',
           // var transcludedElement = clone.filter('.my-class')
           // instead of creating a hackish DOM element:
           var transcluded = angular.element('<div>').append(clone);
-
           var transcludedMatch = transcluded.querySelectorAll('.ui-select-match');
           transcludedMatch.removeAttr('ui-select-match'); //To avoid loop in case directive as attr
           transcludedMatch.removeAttr('data-ui-select-match'); // Properly handle HTML5 data-attributes
@@ -438,4 +444,4 @@ uis.directive('uiSelect',
       };
     }
   };
-}]);
+}

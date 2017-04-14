@@ -5,7 +5,8 @@
  * See https://github.com/angular-ui/bootstrap/blob/master/src/debounce/debounce.js
  *
  */
-uis.factory('$$uisDebounce', ['$timeout', function($timeout) {
+export default function $$uisDebounce($timeout) {
+  'ngInject';
   return function(callback, debounceTime) {
     var timeoutPromise;
 
@@ -21,4 +22,4 @@ uis.factory('$$uisDebounce', ['$timeout', function($timeout) {
       }, debounceTime);
     };
   };
-}]);
+}
