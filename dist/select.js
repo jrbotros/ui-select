@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.19.7 - 2017-04-14T03:23:48.011Z
+ * Version: 0.19.7 - 2017-04-19T03:46:59.748Z
  * License: MIT
  */
 /******/ (function(modules) { // webpackBootstrap
@@ -11627,7 +11627,7 @@ function uiSelect($document, uiSelectConfig, uiSelectMinErr, uisOffset, $compile
           // var transcludedElement = clone.filter('.my-class')
           // instead of creating a hackish DOM element:
           var transcluded = _angular2.default.element('<div>').append(clone);
-          var transcludedMatch = transcluded.querySelectorAll('.ui-select-match');
+          var transcludedMatch = transcluded.querySelectorAll('.ui-select-match-wrapper');
           transcludedMatch.removeAttr('ui-select-match'); //To avoid loop in case directive as attr
           transcludedMatch.removeAttr('data-ui-select-match'); // Properly handle HTML5 data-attributes
           if (transcludedMatch.length !== 1) {
@@ -46388,13 +46388,13 @@ module.exports = "<div class=ui-select-header ng-transclude></div> ";
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = "<span class=ui-select-match> <span ng-repeat=\"$item in $select.selected track by $index\"> <span class=\"ui-select-match-item btn btn-default btn-xs\" tabindex=-1 type=button ng-disabled=$select.disabled ng-click=\"$selectMultiple.activeMatchIndex = $index;\" ng-class=\"{'btn-primary':$selectMultiple.activeMatchIndex === $index, 'select-locked':$select.isLocked(this, $index)}\" ui-select-sort=$select.selected> <span class=\"close ui-select-match-close\" ng-hide=$select.disabled ng-click=$selectMultiple.removeChoice($index)>&nbsp;&times;</span> <span uis-transclude-append></span> </span> </span> </span> ";
+module.exports = "<span class=\"ui-select-match ui-select-match-wrapper\"> <span ng-repeat=\"$item in $select.selected track by $index\"> <span class=\"ui-select-match-item btn btn-default btn-xs\" tabindex=-1 type=button ng-disabled=$select.disabled ng-click=\"$selectMultiple.activeMatchIndex = $index;\" ng-class=\"{'btn-primary':$selectMultiple.activeMatchIndex === $index, 'select-locked':$select.isLocked(this, $index)}\" ui-select-sort=$select.selected> <span class=\"close ui-select-match-close\" ng-hide=$select.disabled ng-click=$selectMultiple.removeChoice($index)>&nbsp;&times;</span> <span uis-transclude-append></span> </span> </span> </span> ";
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=ui-select-match ng-hide=\"$select.open && $select.searchEnabled\" ng-disabled=$select.disabled ng-class=\"{'btn-default-focus':$select.focus}\"> <span tabindex=-1 class=\"btn btn-default form-control ui-select-toggle\" aria-label=\"{{ $select.baseTitle }} activate\" ng-disabled=$select.disabled ng-click=$select.activate() style=outline:0> <span ng-show=$select.isEmpty() class=\"ui-select-placeholder text-muted\">{{$select.placeholder}}</span> <span ng-hide=$select.isEmpty() class=\"ui-select-match-text pull-left\" ng-class=\"{'ui-select-allow-clear': $select.allowClear && !$select.isEmpty()}\" ng-transclude=\"\"></span> <i class=\"caret pull-right\" ng-click=$select.toggle($event)></i> <a ng-show=\"$select.allowClear && !$select.isEmpty() && ($select.disabled !== true)\" aria-label=\"{{ $select.baseTitle }} clear\" style=margin-right:10px ng-click=$select.clear($event) class=\"btn btn-xs btn-link pull-right\"> <i class=\"glyphicon glyphicon-remove\" aria-hidden=true></i> </a> </span> </div> ";
+module.exports = "<div class=\"ui-select-match ui-select-match-wrapper\" ng-hide=\"$select.open && $select.searchEnabled\" ng-disabled=$select.disabled ng-class=\"{'btn-default-focus':$select.focus}\"> <span tabindex=-1 class=\"btn btn-default form-control ui-select-toggle\" aria-label=\"{{ $select.baseTitle }} activate\" ng-disabled=$select.disabled ng-click=$select.activate() style=outline:0> <span ng-show=$select.isEmpty() class=\"ui-select-placeholder text-muted\">{{$select.placeholder}}</span> <span ng-hide=$select.isEmpty() class=\"ui-select-match-text pull-left\" ng-class=\"{'ui-select-allow-clear': $select.allowClear && !$select.isEmpty()}\" ng-transclude=\"\"></span> <i class=\"caret pull-right\" ng-click=$select.toggle($event)></i> <a ng-show=\"$select.allowClear && !$select.isEmpty() && ($select.disabled !== true)\" aria-label=\"{{ $select.baseTitle }} clear\" style=margin-right:10px ng-click=$select.clear($event) class=\"btn btn-xs btn-link pull-right\"> <i class=\"glyphicon glyphicon-remove\" aria-hidden=true></i> </a> </span> </div> ";
 
 /***/ }),
 /* 23 */
@@ -46436,13 +46436,13 @@ module.exports = "<div class=ui-select-header ng-transclude></div> ";
 /* 29 */
 /***/ (function(module, exports) {
 
-module.exports = " <span class=ui-select-match> <li class=\"ui-select-match-item select2-search-choice\" ng-repeat=\"$item in $select.selected track by $index\" ng-class=\"{'select2-search-choice-focus':$selectMultiple.activeMatchIndex === $index, 'select2-locked':$select.isLocked(this, $index)}\" ui-select-sort=$select.selected> <span uis-transclude-append></span> <a href=javascript:; class=\"ui-select-match-close select2-search-choice-close\" ng-click=$selectMultiple.removeChoice($index) tabindex=-1></a> </li> </span> ";
+module.exports = " <span class=\"ui-select-match ui-select-match-wrapper\"> <li class=\"ui-select-match-item select2-search-choice\" ng-repeat=\"$item in $select.selected track by $index\" ng-class=\"{'select2-search-choice-focus':$selectMultiple.activeMatchIndex === $index, 'select2-locked':$select.isLocked(this, $index)}\" ui-select-sort=$select.selected> <span uis-transclude-append></span> <a href=javascript:; class=\"ui-select-match-close select2-search-choice-close\" ng-click=$selectMultiple.removeChoice($index) tabindex=-1></a> </li> </span> ";
 
 /***/ }),
 /* 30 */
 /***/ (function(module, exports) {
 
-module.exports = " <a class=\"select2-choice ui-select-match\" ng-class=\"{'select2-default': $select.isEmpty()}\" ng-click=$select.toggle($event) aria-label=\"{{ $select.baseTitle }} select\"> <span ng-show=$select.isEmpty() class=select2-chosen>{{$select.placeholder}}</span> <span ng-hide=$select.isEmpty() class=select2-chosen ng-transclude></span> <abbr ng-if=\"$select.allowClear && !$select.isEmpty()\" class=select2-search-choice-close ng-click=$select.clear($event)></abbr> <span class=\"select2-arrow ui-select-toggle\"><b></b></span> </a> ";
+module.exports = " <a class=\"select2-choice ui-select-match ui-select-match-wrapper\" ng-class=\"{'select2-default': $select.isEmpty()}\" ng-click=$select.toggle($event) aria-label=\"{{ $select.baseTitle }} select\"> <span ng-show=$select.isEmpty() class=select2-chosen>{{$select.placeholder}}</span> <span ng-hide=$select.isEmpty() class=select2-chosen ng-transclude></span> <abbr ng-if=\"$select.allowClear && !$select.isEmpty()\" class=select2-search-choice-close ng-click=$select.clear($event)></abbr> <span class=\"select2-arrow ui-select-toggle\"><b></b></span> </a> ";
 
 /***/ }),
 /* 31 */
@@ -46484,13 +46484,13 @@ module.exports = "<div class=ui-select-header ng-transclude></div> ";
 /* 37 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=ui-select-match data-value ng-repeat=\"$item in $select.selected track by $index\" ng-click=\"$selectMultiple.activeMatchIndex = $index;\" ng-class=\"{'active':$selectMultiple.activeMatchIndex === $index}\" ui-select-sort=$select.selected> <span class=ui-select-match-item ng-class=\"{'select-locked':$select.isLocked(this, $index)}\"> <span uis-transclude-append></span> <span class=\"remove ui-select-match-close\" ng-hide=$select.disabled ng-click=$selectMultiple.removeChoice($index)>&times;</span> </span> </div> ";
+module.exports = "<span class=ui-select-match-wrapper> <div class=ui-select-match data-value ng-repeat=\"$item in $select.selected track by $index\" ng-click=\"$selectMultiple.activeMatchIndex = $index;\" ng-class=\"{'active':$selectMultiple.activeMatchIndex === $index}\" ui-select-sort=$select.selected> <span class=ui-select-match-item ng-class=\"{'select-locked':$select.isLocked(this, $index)}\"> <span uis-transclude-append></span> <span class=\"remove ui-select-match-close\" ng-hide=$select.disabled ng-click=$selectMultiple.removeChoice($index)>&times;</span> </span> </div> </span> ";
 
 /***/ }),
 /* 38 */
 /***/ (function(module, exports) {
 
-module.exports = "<div ng-hide=\"$select.searchEnabled && ($select.open || $select.isEmpty())\" class=ui-select-match> <span ng-show=\"!$select.searchEnabled && ($select.isEmpty() || $select.open)\" class=\"ui-select-placeholder text-muted\">{{$select.placeholder}}</span> <span ng-hide=\"$select.isEmpty() || $select.open\" ng-transclude></span> </div> ";
+module.exports = "<div ng-hide=\"$select.searchEnabled && ($select.open || $select.isEmpty())\" class=\"ui-select-match ui-select-match-wrapper\"> <span ng-show=\"!$select.searchEnabled && ($select.isEmpty() || $select.open)\" class=\"ui-select-placeholder text-muted\">{{$select.placeholder}}</span> <span ng-hide=\"$select.isEmpty() || $select.open\" ng-transclude></span> </div> ";
 
 /***/ }),
 /* 39 */

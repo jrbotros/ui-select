@@ -3,7 +3,7 @@
   otherwise CSS rules from https://github.com/fk/select2-bootstrap-css
   do not work: [class^="select2-choice"]
 -->
-<span class="ui-select-match">
+<span class="ui-select-match ui-select-match-wrapper">
   <li class="ui-select-match-item select2-search-choice" ng-repeat="$item in $select.selected track by $index"
       ng-class="{'select2-search-choice-focus':$selectMultiple.activeMatchIndex === $index, 'select2-locked':$select.isLocked(this, $index)}"
       ui-select-sort="$select.selected">

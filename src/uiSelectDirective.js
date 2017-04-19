@@ -228,7 +228,7 @@ export default function uiSelect($document, uiSelectConfig, uiSelectMinErr, uisO
           // var transcludedElement = clone.filter('.my-class')
           // instead of creating a hackish DOM element:
           var transcluded = angular.element('<div>').append(clone);
-          var transcludedMatch = transcluded.querySelectorAll('.ui-select-match');
+          var transcludedMatch = transcluded.querySelectorAll('.ui-select-match-wrapper');
           transcludedMatch.removeAttr('ui-select-match'); //To avoid loop in case directive as attr
           transcludedMatch.removeAttr('data-ui-select-match'); // Properly handle HTML5 data-attributes
           if (transcludedMatch.length !== 1) {
