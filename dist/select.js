@@ -1,7 +1,7 @@
 /*!
  * ui-select
  * http://github.com/angular-ui/ui-select
- * Version: 0.19.7 - 2017-04-19T03:46:59.748Z
+ * Version: 0.19.8 - 2017-04-19T03:49:35.030Z
  * License: MIT
  */
 /******/ (function(modules) { // webpackBootstrap
@@ -69,7 +69,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 42);
+/******/ 	return __webpack_require__(__webpack_require__.s = 36);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -89,7 +89,7 @@ function isNil(value) {
 }
 
 function getTemplate(theme, name) {
-  return __webpack_require__(43)("./" + theme + "/" + name + ".tpl.html");
+  return __webpack_require__(37)("./" + theme + "/" + name + ".tpl.html");
 }
 
 var KEY = exports.KEY = {
@@ -11648,24 +11648,6 @@ function uiSelect($document, uiSelectConfig, uiSelectMinErr, uisOffset, $compile
           transcludedNoChoice.removeAttr('data-ui-select-no-choice'); // Properly handle HTML5 data-attributes
           if (transcludedNoChoice.length == 1) {
             element.querySelectorAll('.ui-select-no-choice').replaceWith(transcludedNoChoice);
-          }
-
-          var transcludedHeader = transcluded.querySelectorAll('.ui-select-header');
-          transcludedHeader.removeAttr('ui-select-header'); // To avoid loop in case directive as attr
-          transcludedHeader.removeAttr('data-ui-select-header'); // Properly handle HTML5 data-attributes
-          if (transcludedHeader.length == 1) {
-            element.querySelectorAll('.ui-select-header').replaceWith(transcludedHeader);
-          } else {
-            element.querySelectorAll('.ui-select-header').remove();
-          }
-
-          var transcludedFooter = transcluded.querySelectorAll('.ui-select-footer');
-          transcludedFooter.removeAttr('ui-select-footer'); // To avoid loop in case directive as attr
-          transcludedFooter.removeAttr('data-ui-select-footer'); // Properly handle HTML5 data-attributes
-          if (transcludedFooter.length == 1) {
-            element.querySelectorAll('.ui-select-footer').replaceWith(transcludedFooter);
-          } else {
-            element.querySelectorAll('.ui-select-footer').remove();
           }
         });
 
@@ -46370,148 +46352,112 @@ $provide.value("$locale", {
 /* 18 */
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"ui-select-choices ui-select-choices-content\"> <li class=ui-select-choices-group id=\"ui-select-choices-{{ $select.generatedId }}\"> <div class=divider ng-show=\"$select.isGrouped && $index > 0\"></div> <div ng-show=$select.isGrouped class=\"ui-select-choices-group-label dropdown-header\" ng-bind=$group.name></div> <div ng-attr-id=\"ui-select-choices-row-{{ $select.generatedId }}-{{$index}}\" class=ui-select-choices-row ng-class=\"{active: $select.isActive(this), disabled: $select.isDisabled(this)}\" role=option> <span class=ui-select-choices-row-inner></span> </div> </li> </ul> ";
+module.exports = "<ul class=\"ui-select-choices ui-select-choices-content ui-select-dropdown dropdown-menu\" ng-show=\"$select.open && $select.items.length > 0\"> <li class=ui-select-choices-group id=\"ui-select-choices-{{ $select.generatedId }}\"> <div class=divider ng-show=\"$select.isGrouped && $index > 0\"></div> <div ng-show=$select.isGrouped class=\"ui-select-choices-group-label dropdown-header\" ng-bind=$group.name></div> <div ng-attr-id=\"ui-select-choices-row-{{ $select.generatedId }}-{{$index}}\" class=ui-select-choices-row ng-class=\"{active: $select.isActive(this), disabled: $select.isDisabled(this)}\" role=option> <span class=ui-select-choices-row-inner></span> </div> </li> </ul> ";
 
 /***/ }),
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=ui-select-footer ng-transclude></div> ";
+module.exports = "<span class=\"ui-select-match ui-select-match-wrapper\"> <span ng-repeat=\"$item in $select.selected track by $index\"> <span class=\"ui-select-match-item btn btn-default btn-xs\" tabindex=-1 type=button ng-disabled=$select.disabled ng-click=\"$selectMultiple.activeMatchIndex = $index;\" ng-class=\"{'btn-primary':$selectMultiple.activeMatchIndex === $index, 'select-locked':$select.isLocked(this, $index)}\" ui-select-sort=$select.selected> <span class=\"close ui-select-match-close\" ng-hide=$select.disabled ng-click=$selectMultiple.removeChoice($index)>&nbsp;&times;</span> <span uis-transclude-append></span> </span> </span> </span> ";
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=ui-select-header ng-transclude></div> ";
+module.exports = "<div class=\"ui-select-match ui-select-match-wrapper\" ng-hide=\"$select.open && $select.searchEnabled\" ng-disabled=$select.disabled ng-class=\"{'btn-default-focus':$select.focus}\"> <span tabindex=-1 class=\"btn btn-default form-control ui-select-toggle\" aria-label=\"{{ $select.baseTitle }} activate\" ng-disabled=$select.disabled ng-click=$select.activate() style=outline:0> <span ng-show=$select.isEmpty() class=\"ui-select-placeholder text-muted\">{{$select.placeholder}}</span> <span ng-hide=$select.isEmpty() class=\"ui-select-match-text pull-left\" ng-class=\"{'ui-select-allow-clear': $select.allowClear && !$select.isEmpty()}\" ng-transclude=\"\"></span> <i class=\"caret pull-right\" ng-click=$select.toggle($event)></i> <a ng-show=\"$select.allowClear && !$select.isEmpty() && ($select.disabled !== true)\" aria-label=\"{{ $select.baseTitle }} clear\" style=margin-right:10px ng-click=$select.clear($event) class=\"btn btn-xs btn-link pull-right\"> <i class=\"glyphicon glyphicon-remove\" aria-hidden=true></i> </a> </span> </div> ";
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = "<span class=\"ui-select-match ui-select-match-wrapper\"> <span ng-repeat=\"$item in $select.selected track by $index\"> <span class=\"ui-select-match-item btn btn-default btn-xs\" tabindex=-1 type=button ng-disabled=$select.disabled ng-click=\"$selectMultiple.activeMatchIndex = $index;\" ng-class=\"{'btn-primary':$selectMultiple.activeMatchIndex === $index, 'select-locked':$select.isLocked(this, $index)}\" ui-select-sort=$select.selected> <span class=\"close ui-select-match-close\" ng-hide=$select.disabled ng-click=$selectMultiple.removeChoice($index)>&nbsp;&times;</span> <span uis-transclude-append></span> </span> </span> </span> ";
+module.exports = "<ul class=\"ui-select-no-choice dropdown-menu\" ng-show=\"$select.items.length == 0\"> <li ng-transclude> </li> </ul> ";
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ui-select-match ui-select-match-wrapper\" ng-hide=\"$select.open && $select.searchEnabled\" ng-disabled=$select.disabled ng-class=\"{'btn-default-focus':$select.focus}\"> <span tabindex=-1 class=\"btn btn-default form-control ui-select-toggle\" aria-label=\"{{ $select.baseTitle }} activate\" ng-disabled=$select.disabled ng-click=$select.activate() style=outline:0> <span ng-show=$select.isEmpty() class=\"ui-select-placeholder text-muted\">{{$select.placeholder}}</span> <span ng-hide=$select.isEmpty() class=\"ui-select-match-text pull-left\" ng-class=\"{'ui-select-allow-clear': $select.allowClear && !$select.isEmpty()}\" ng-transclude=\"\"></span> <i class=\"caret pull-right\" ng-click=$select.toggle($event)></i> <a ng-show=\"$select.allowClear && !$select.isEmpty() && ($select.disabled !== true)\" aria-label=\"{{ $select.baseTitle }} clear\" style=margin-right:10px ng-click=$select.clear($event) class=\"btn btn-xs btn-link pull-right\"> <i class=\"glyphicon glyphicon-remove\" aria-hidden=true></i> </a> </span> </div> ";
+module.exports = "<div class=\"ui-select-container ui-select-multiple ui-select-bootstrap dropdown form-control\" ng-class=\"{open: $select.open}\"> <div> <div class=ui-select-match></div> <input type=search autocomplete=off autocorrect=off autocapitalize=off spellcheck=false class=\"ui-select-search input-xs\" placeholder={{$selectMultiple.getPlaceholder()}} ng-disabled=$select.disabled ng-click=$select.activate() ng-model=$select.search role=combobox aria-expanded={{$select.open}} aria-label={{$select.baseTitle}} ng-class=\"{'spinner': $select.refreshing}\" ondrop=return!1> </div> <div class=ui-select-choices></div> <div class=ui-select-no-choice></div> </div> ";
 
 /***/ }),
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"ui-select-no-choice dropdown-menu\" ng-show=\"$select.items.length == 0\"> <li ng-transclude> </li> </ul> ";
+module.exports = "<div class=\"ui-select-container ui-select-bootstrap dropdown\" ng-class=\"{open: $select.open}\"> <div class=ui-select-match></div> <span ng-show=\"$select.open && $select.refreshing  && $select.spinnerEnabled\" class=\"ui-select-refreshing {{$select.spinnerClass}}\"></span> <input type=search autocomplete=off tabindex=-1 aria-expanded=true aria-label=\"{{ $select.baseTitle }}\" aria-owns=\"ui-select-choices-{{ $select.generatedId }}\" class=\"form-control ui-select-search\" ng-class=\"{ 'ui-select-search-hidden' : !$select.searchEnabled }\" placeholder={{$select.placeholder}} ng-model=$select.search ng-show=$select.open> <div class=ui-select-choices></div> <div class=ui-select-no-choice></div> </div> ";
 
 /***/ }),
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ui-select-container ui-select-multiple ui-select-bootstrap dropdown form-control\" ng-class=\"{open: $select.open}\"> <div> <div class=ui-select-match></div> <input type=search autocomplete=off autocorrect=off autocapitalize=off spellcheck=false class=\"ui-select-search input-xs\" placeholder={{$selectMultiple.getPlaceholder()}} ng-disabled=$select.disabled ng-click=$select.activate() ng-model=$select.search role=combobox aria-expanded={{$select.open}} aria-label={{$select.baseTitle}} ng-class=\"{'spinner': $select.refreshing}\" ondrop=return!1> </div> <div ng-show=\"$select.open && $select.items.length > 0\" class=\"ui-select-dropdown dropdown-menu\"> <div class=ui-select-header></div> <div class=ui-select-choices></div> <div class=ui-select-footer></div> </div> <div class=ui-select-no-choice></div> </div> ";
+module.exports = "<ul tabindex=-1 class=\"ui-select-choices ui-select-choices-content select2-results\"> <li class=ui-select-choices-group ng-class=\"{'select2-result-with-children': $select.choiceGrouped($group) }\"> <div ng-show=$select.choiceGrouped($group) class=\"ui-select-choices-group-label select2-result-label\" ng-bind=$group.name></div> <ul id=\"ui-select-choices-{{ $select.generatedId }}\" ng-class=\"{'select2-result-sub': $select.choiceGrouped($group), 'select2-result-single': !$select.choiceGrouped($group) }\"> <li role=option ng-attr-id=\"ui-select-choices-row-{{ $select.generatedId }}-{{$index}}\" class=ui-select-choices-row ng-class=\"{'select2-highlighted': $select.isActive(this), 'select2-disabled': $select.isDisabled(this)}\"> <div class=\"select2-result-label ui-select-choices-row-inner\"></div> </li> </ul> </li> </ul> ";
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ui-select-container ui-select-bootstrap dropdown\" ng-class=\"{open: $select.open}\"> <div class=ui-select-match></div> <span ng-show=\"$select.open && $select.refreshing  && $select.spinnerEnabled\" class=\"ui-select-refreshing {{$select.spinnerClass}}\"></span> <input type=search autocomplete=off tabindex=-1 aria-expanded=true aria-label=\"{{ $select.baseTitle }}\" aria-owns=\"ui-select-choices-{{ $select.generatedId }}\" class=\"form-control ui-select-search\" ng-class=\"{ 'ui-select-search-hidden' : !$select.searchEnabled }\" placeholder={{$select.placeholder}} ng-model=$select.search ng-show=$select.open> <div ng-show=\"$select.open && $select.items.length > 0\" class=\"ui-select-dropdown dropdown-menu\"> <div class=ui-select-header></div> <div class=ui-select-choices></div> <div class=ui-select-footer></div> </div> <div class=ui-select-no-choice></div> </div> ";
+module.exports = " <span class=\"ui-select-match ui-select-match-wrapper\"> <li class=\"ui-select-match-item select2-search-choice\" ng-repeat=\"$item in $select.selected track by $index\" ng-class=\"{'select2-search-choice-focus':$selectMultiple.activeMatchIndex === $index, 'select2-locked':$select.isLocked(this, $index)}\" ui-select-sort=$select.selected> <span uis-transclude-append></span> <a href=javascript:; class=\"ui-select-match-close select2-search-choice-close\" ng-click=$selectMultiple.removeChoice($index) tabindex=-1></a> </li> </span> ";
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = "<ul tabindex=-1 class=\"ui-select-choices ui-select-choices-content select2-results\"> <li class=ui-select-choices-group ng-class=\"{'select2-result-with-children': $select.choiceGrouped($group) }\"> <div ng-show=$select.choiceGrouped($group) class=\"ui-select-choices-group-label select2-result-label\" ng-bind=$group.name></div> <ul id=\"ui-select-choices-{{ $select.generatedId }}\" ng-class=\"{'select2-result-sub': $select.choiceGrouped($group), 'select2-result-single': !$select.choiceGrouped($group) }\"> <li role=option ng-attr-id=\"ui-select-choices-row-{{ $select.generatedId }}-{{$index}}\" class=ui-select-choices-row ng-class=\"{'select2-highlighted': $select.isActive(this), 'select2-disabled': $select.isDisabled(this)}\"> <div class=\"select2-result-label ui-select-choices-row-inner\"></div> </li> </ul> </li> </ul> ";
+module.exports = " <a class=\"select2-choice ui-select-match ui-select-match-wrapper\" ng-class=\"{'select2-default': $select.isEmpty()}\" ng-click=$select.toggle($event) aria-label=\"{{ $select.baseTitle }} select\"> <span ng-show=$select.isEmpty() class=select2-chosen>{{$select.placeholder}}</span> <span ng-hide=$select.isEmpty() class=select2-chosen ng-transclude></span> <abbr ng-if=\"$select.allowClear && !$select.isEmpty()\" class=select2-search-choice-close ng-click=$select.clear($event)></abbr> <span class=\"select2-arrow ui-select-toggle\"><b></b></span> </a> ";
 
 /***/ }),
 /* 27 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=ui-select-footer ng-transclude></div> ";
+module.exports = "<div class=\"ui-select-no-choice dropdown\" ng-show=\"$select.items.length == 0\"> <div class=dropdown-content> <div data-selectable=\"\" ng-transclude></div> </div> </div>";
 
 /***/ }),
 /* 28 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=ui-select-header ng-transclude></div> ";
+module.exports = "<div class=\"ui-select-container ui-select-multiple select2 select2-container select2-container-multi\" ng-class=\"{'select2-container-active select2-dropdown-open open': $select.open,\n                'select2-container-disabled': $select.disabled}\"> <ul class=select2-choices> <span class=ui-select-match></span> <li class=select2-search-field> <input type=search autocomplete=off autocorrect=off autocapitalize=off spellcheck=false role=combobox aria-expanded=true aria-owns=\"ui-select-choices-{{ $select.generatedId }}\" aria-label=\"{{ $select.baseTitle }}\" aria-activedescendant=\"ui-select-choices-row-{{ $select.generatedId }}-{{ $select.activeIndex }}\" class=\"select2-input ui-select-search\" placeholder={{$selectMultiple.getPlaceholder()}} ng-disabled=$select.disabled ng-hide=$select.disabled ng-model=$select.search ng-click=$select.activate() style=width:34px ondrop=return!1> </li> </ul> <div class=\"ui-select-dropdown select2-drop select2-with-searchbox select2-drop-active\" ng-class=\"{'select2-display-none': !$select.open || $select.items.length === 0}\"> <div class=ui-select-choices></div> </div> </div> ";
 
 /***/ }),
 /* 29 */
 /***/ (function(module, exports) {
 
-module.exports = " <span class=\"ui-select-match ui-select-match-wrapper\"> <li class=\"ui-select-match-item select2-search-choice\" ng-repeat=\"$item in $select.selected track by $index\" ng-class=\"{'select2-search-choice-focus':$selectMultiple.activeMatchIndex === $index, 'select2-locked':$select.isLocked(this, $index)}\" ui-select-sort=$select.selected> <span uis-transclude-append></span> <a href=javascript:; class=\"ui-select-match-close select2-search-choice-close\" ng-click=$selectMultiple.removeChoice($index) tabindex=-1></a> </li> </span> ";
+module.exports = "<div class=\"ui-select-container select2 select2-container\" ng-class=\"{'select2-container-active select2-dropdown-open open': $select.open,\n                'select2-container-disabled': $select.disabled,\n                'select2-container-active': $select.focus,\n                'select2-allowclear': $select.allowClear && !$select.isEmpty()}\"> <div class=ui-select-match></div> <div class=\"ui-select-dropdown select2-drop select2-with-searchbox select2-drop-active\" ng-class=\"{'select2-display-none': !$select.open}\"> <div class=search-container ng-class=\"{'ui-select-search-hidden':!$select.searchEnabled, 'select2-search':$select.searchEnabled}\"> <input type=search autocomplete=off autocorrect=off autocapitalize=off spellcheck=false ng-class=\"{'select2-active': $select.refreshing}\" role=combobox aria-expanded=true aria-owns=\"ui-select-choices-{{ $select.generatedId }}\" aria-label=\"{{ $select.baseTitle }}\" class=\"ui-select-search select2-input\" ng-model=$select.search> </div> <div class=ui-select-choices></div> <div class=ui-select-no-choice></div> </div> </div> ";
 
 /***/ }),
 /* 30 */
 /***/ (function(module, exports) {
 
-module.exports = " <a class=\"select2-choice ui-select-match ui-select-match-wrapper\" ng-class=\"{'select2-default': $select.isEmpty()}\" ng-click=$select.toggle($event) aria-label=\"{{ $select.baseTitle }} select\"> <span ng-show=$select.isEmpty() class=select2-chosen>{{$select.placeholder}}</span> <span ng-hide=$select.isEmpty() class=select2-chosen ng-transclude></span> <abbr ng-if=\"$select.allowClear && !$select.isEmpty()\" class=select2-search-choice-close ng-click=$select.clear($event)></abbr> <span class=\"select2-arrow ui-select-toggle\"><b></b></span> </a> ";
+module.exports = "<div ng-show=$select.open class=\"ui-select-choices ui-select-dropdown selectize-dropdown\" ng-class=\"{'single': !$select.multiple, 'multi': $select.multiple}\"> <div class=\"ui-select-choices-content selectize-dropdown-content\"> <div class=\"ui-select-choices-group optgroup\"> <div ng-show=$select.isGrouped class=\"ui-select-choices-group-label optgroup-header\" ng-bind=$group.name></div> <div role=option class=ui-select-choices-row ng-class=\"{active: $select.isActive(this), disabled: $select.isDisabled(this)}\"> <div class=\"option ui-select-choices-row-inner\" data-selectable></div> </div> </div> </div> </div> ";
 
 /***/ }),
 /* 31 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ui-select-no-choice dropdown\" ng-show=\"$select.items.length == 0\"> <div class=dropdown-content> <div data-selectable=\"\" ng-transclude></div> </div> </div>";
+module.exports = "<span class=ui-select-match-wrapper> <div class=ui-select-match data-value ng-repeat=\"$item in $select.selected track by $index\" ng-click=\"$selectMultiple.activeMatchIndex = $index;\" ng-class=\"{'active':$selectMultiple.activeMatchIndex === $index}\" ui-select-sort=$select.selected> <span class=ui-select-match-item ng-class=\"{'select-locked':$select.isLocked(this, $index)}\"> <span uis-transclude-append></span> <span class=\"remove ui-select-match-close\" ng-hide=$select.disabled ng-click=$selectMultiple.removeChoice($index)>&times;</span> </span> </div> </span> ";
 
 /***/ }),
 /* 32 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ui-select-container ui-select-multiple select2 select2-container select2-container-multi\" ng-class=\"{'select2-container-active select2-dropdown-open open': $select.open,\n                'select2-container-disabled': $select.disabled}\"> <ul class=select2-choices> <span class=ui-select-match></span> <li class=select2-search-field> <input type=search autocomplete=off autocorrect=off autocapitalize=off spellcheck=false role=combobox aria-expanded=true aria-owns=\"ui-select-choices-{{ $select.generatedId }}\" aria-label=\"{{ $select.baseTitle }}\" aria-activedescendant=\"ui-select-choices-row-{{ $select.generatedId }}-{{ $select.activeIndex }}\" class=\"select2-input ui-select-search\" placeholder={{$selectMultiple.getPlaceholder()}} ng-disabled=$select.disabled ng-hide=$select.disabled ng-model=$select.search ng-click=$select.activate() style=width:34px ondrop=return!1> </li> </ul> <div class=\"ui-select-dropdown select2-drop select2-with-searchbox select2-drop-active\" ng-class=\"{'select2-display-none': !$select.open || $select.items.length === 0}\"> <div class=ui-select-header></div> <div class=ui-select-choices></div> <div class=ui-select-footer></div> </div> </div> ";
+module.exports = "<div ng-hide=\"$select.searchEnabled && ($select.open || $select.isEmpty())\" class=\"ui-select-match ui-select-match-wrapper\"> <span ng-show=\"!$select.searchEnabled && ($select.isEmpty() || $select.open)\" class=\"ui-select-placeholder text-muted\">{{$select.placeholder}}</span> <span ng-hide=\"$select.isEmpty() || $select.open\" ng-transclude></span> </div> ";
 
 /***/ }),
 /* 33 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ui-select-container select2 select2-container\" ng-class=\"{'select2-container-active select2-dropdown-open open': $select.open,\n                'select2-container-disabled': $select.disabled,\n                'select2-container-active': $select.focus,\n                'select2-allowclear': $select.allowClear && !$select.isEmpty()}\"> <div class=ui-select-match></div> <div class=\"ui-select-dropdown select2-drop select2-with-searchbox select2-drop-active\" ng-class=\"{'select2-display-none': !$select.open}\"> <div class=search-container ng-class=\"{'ui-select-search-hidden':!$select.searchEnabled, 'select2-search':$select.searchEnabled}\"> <input type=search autocomplete=off autocorrect=off autocapitalize=off spellcheck=false ng-class=\"{'select2-active': $select.refreshing}\" role=combobox aria-expanded=true aria-owns=\"ui-select-choices-{{ $select.generatedId }}\" aria-label=\"{{ $select.baseTitle }}\" class=\"ui-select-search select2-input\" ng-model=$select.search> </div> <div class=ui-select-header></div> <div class=ui-select-choices></div> <div class=ui-select-no-choice></div> <div class=ui-select-footer></div> </div> </div> ";
+module.exports = "<div class=\"ui-select-no-choice selectize-dropdown\" ng-show=\"$select.items.length == 0\"> <div class=selectize-dropdown-content> <div data-selectable=\"\" ng-transclude></div> </div> </div> ";
 
 /***/ }),
 /* 34 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=ui-select-choices> <div class=\"ui-select-choices-content selectize-dropdown-content\"> <div class=\"ui-select-choices-group optgroup\"> <div ng-show=$select.isGrouped class=\"ui-select-choices-group-label optgroup-header\" ng-bind=$group.name></div> <div role=option class=ui-select-choices-row ng-class=\"{active: $select.isActive(this), disabled: $select.isDisabled(this)}\"> <div class=\"option ui-select-choices-row-inner\" data-selectable></div> </div> </div> </div> </div> ";
+module.exports = "<div class=\"ui-select-container selectize-control multi plugin-remove_button\" ng-class=\"{'open': $select.open}\"> <div class=selectize-input ng-class=\"{'focus': $select.open, 'disabled': $select.disabled, 'selectize-focus' : $select.focus}\" ng-click=\"$select.open && !$select.searchEnabled ? $select.toggle($event) : $select.activate()\"> <div class=ui-select-match></div> <input type=search autocomplete=off tabindex=-1 class=ui-select-search ng-class=\"{'ui-select-search-hidden':!$select.searchEnabled}\" placeholder={{$selectMultiple.getPlaceholder()}} ng-model=$select.search ng-disabled=$select.disabled aria-expanded={{$select.open}} aria-label=\"{{ $select.baseTitle }}\" ondrop=return!1> </div> <div class=ui-select-choices></div> <div class=ui-select-no-choice></div> </div>";
 
 /***/ }),
 /* 35 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=ui-select-footer ng-transclude></div> ";
+module.exports = "<div class=\"ui-select-container selectize-control single\" ng-class=\"{'open': $select.open}\"> <div class=selectize-input ng-class=\"{'focus': $select.open, 'disabled': $select.disabled, 'selectize-focus' : $select.focus}\" ng-click=\"$select.open && !$select.searchEnabled ? $select.toggle($event) : $select.activate()\"> <div class=ui-select-match></div> <input type=search autocomplete=off tabindex=-1 class=\"ui-select-search ui-select-toggle\" ng-class=\"{'ui-select-search-hidden':!$select.searchEnabled}\" ng-click=$select.toggle($event) placeholder={{$select.placeholder}} ng-model=$select.search ng-hide=\"!$select.isEmpty() && !$select.open\" ng-disabled=$select.disabled aria-label=\"{{ $select.baseTitle }}\"> </div> <div class=ui-select-choices></div> <div class=ui-select-no-choice></div> </div> ";
 
 /***/ }),
 /* 36 */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=ui-select-header ng-transclude></div> ";
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports) {
-
-module.exports = "<span class=ui-select-match-wrapper> <div class=ui-select-match data-value ng-repeat=\"$item in $select.selected track by $index\" ng-click=\"$selectMultiple.activeMatchIndex = $index;\" ng-class=\"{'active':$selectMultiple.activeMatchIndex === $index}\" ui-select-sort=$select.selected> <span class=ui-select-match-item ng-class=\"{'select-locked':$select.isLocked(this, $index)}\"> <span uis-transclude-append></span> <span class=\"remove ui-select-match-close\" ng-hide=$select.disabled ng-click=$selectMultiple.removeChoice($index)>&times;</span> </span> </div> </span> ";
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports) {
-
-module.exports = "<div ng-hide=\"$select.searchEnabled && ($select.open || $select.isEmpty())\" class=\"ui-select-match ui-select-match-wrapper\"> <span ng-show=\"!$select.searchEnabled && ($select.isEmpty() || $select.open)\" class=\"ui-select-placeholder text-muted\">{{$select.placeholder}}</span> <span ng-hide=\"$select.isEmpty() || $select.open\" ng-transclude></span> </div> ";
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"ui-select-no-choice selectize-dropdown\" ng-show=\"$select.items.length == 0\"> <div class=selectize-dropdown-content> <div data-selectable=\"\" ng-transclude></div> </div> </div> ";
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"ui-select-container selectize-control multi plugin-remove_button\" ng-class=\"{'open': $select.open}\"> <div class=selectize-input ng-class=\"{'focus': $select.open, 'disabled': $select.disabled, 'selectize-focus' : $select.focus}\" ng-click=\"$select.open && !$select.searchEnabled ? $select.toggle($event) : $select.activate()\"> <div class=ui-select-match></div> <input type=search autocomplete=off tabindex=-1 class=ui-select-search ng-class=\"{'ui-select-search-hidden':!$select.searchEnabled}\" placeholder={{$selectMultiple.getPlaceholder()}} ng-model=$select.search ng-disabled=$select.disabled aria-expanded={{$select.open}} aria-label=\"{{ $select.baseTitle }}\" ondrop=return!1> </div> <div ng-show=$select.open class=\"ui-select-dropdown selectize-dropdown\" ng-class=\"{'single': !$select.multiple, 'multi': $select.multiple}\"> <div class=ui-select-header></div> <div class=ui-select-choices></div> <div class=ui-select-footer></div> </div> <div class=ui-select-no-choice></div> </div> ";
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"ui-select-container selectize-control single\" ng-class=\"{'open': $select.open}\"> <div class=selectize-input ng-class=\"{'focus': $select.open, 'disabled': $select.disabled, 'selectize-focus' : $select.focus}\" ng-click=\"$select.open && !$select.searchEnabled ? $select.toggle($event) : $select.activate()\"> <div class=ui-select-match></div> <input type=search autocomplete=off tabindex=-1 class=\"ui-select-search ui-select-toggle\" ng-class=\"{'ui-select-search-hidden':!$select.searchEnabled}\" ng-click=$select.toggle($event) placeholder={{$select.placeholder}} ng-model=$select.search ng-hide=\"!$select.isEmpty() && !$select.open\" ng-disabled=$select.disabled aria-label=\"{{ $select.baseTitle }}\"> </div> <div ng-show=$select.open class=\"ui-select-dropdown selectize-dropdown\" ng-class=\"{'single': !$select.multiple, 'multi': $select.multiple}\"> <div class=ui-select-header></div> <div class=ui-select-choices></div> <div class=ui-select-footer></div> </div> <div class=ui-select-no-choice></div> </div> ";
-
-/***/ }),
-/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46704,34 +46650,28 @@ _angular2.default.module(moduleName, []).constant('uiSelectConfig', {
 .service('RepeatParser', _uisRepeatParserService2.default).controller('uiSelectCtrl', _uiSelectController2.default);
 
 /***/ }),
-/* 43 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"./bootstrap/choices.tpl.html": 18,
-	"./bootstrap/footer.tpl.html": 19,
-	"./bootstrap/header.tpl.html": 20,
-	"./bootstrap/match-multiple.tpl.html": 21,
-	"./bootstrap/match.tpl.html": 22,
-	"./bootstrap/no-choice.tpl.html": 23,
-	"./bootstrap/select-multiple.tpl.html": 24,
-	"./bootstrap/select.tpl.html": 25,
-	"./select2/choices.tpl.html": 26,
-	"./select2/footer.tpl.html": 27,
-	"./select2/header.tpl.html": 28,
-	"./select2/match-multiple.tpl.html": 29,
-	"./select2/match.tpl.html": 30,
-	"./select2/no-choice.tpl.html": 31,
-	"./select2/select-multiple.tpl.html": 32,
-	"./select2/select.tpl.html": 33,
-	"./selectize/choices.tpl.html": 34,
-	"./selectize/footer.tpl.html": 35,
-	"./selectize/header.tpl.html": 36,
-	"./selectize/match-multiple.tpl.html": 37,
-	"./selectize/match.tpl.html": 38,
-	"./selectize/no-choice.tpl.html": 39,
-	"./selectize/select-multiple.tpl.html": 40,
-	"./selectize/select.tpl.html": 41
+	"./bootstrap/match-multiple.tpl.html": 19,
+	"./bootstrap/match.tpl.html": 20,
+	"./bootstrap/no-choice.tpl.html": 21,
+	"./bootstrap/select-multiple.tpl.html": 22,
+	"./bootstrap/select.tpl.html": 23,
+	"./select2/choices.tpl.html": 24,
+	"./select2/match-multiple.tpl.html": 25,
+	"./select2/match.tpl.html": 26,
+	"./select2/no-choice.tpl.html": 27,
+	"./select2/select-multiple.tpl.html": 28,
+	"./select2/select.tpl.html": 29,
+	"./selectize/choices.tpl.html": 30,
+	"./selectize/match-multiple.tpl.html": 31,
+	"./selectize/match.tpl.html": 32,
+	"./selectize/no-choice.tpl.html": 33,
+	"./selectize/select-multiple.tpl.html": 34,
+	"./selectize/select.tpl.html": 35
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -46747,7 +46687,7 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 43;
+webpackContext.id = 37;
 
 /***/ })
 /******/ ]);
